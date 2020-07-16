@@ -1,0 +1,21 @@
+---
+- name: create nats directory
+  file: path=/srv/nats/bin state=directory
+
+- name: unarchive gnats
+  unarchive:
+    src: https://github.com/nats-io/gnatsd/releases/download/v0.9.4/gnatsd-v0.9.4-linux-amd64.zip
+    dest: /srv/nats
+    copy: no
+
+- name: copy gnatsd executable
+  command: mv /srv/nats/gnatsd-v0.9.4-linux-amd64/gnatsd /srv/nats/bin/gnatsd
+
+- name: make gnatsd executable
+  file: path=/srv/nats/bin/gnatsd mode=0755
+
+- name: install nats systemd unit file
+  template: src=nats.service dest=/etc/systemd/system/nats.service
+
+- name: start nats
+  service: name=nats state=started enabled=yes

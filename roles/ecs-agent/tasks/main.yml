@@ -1,0 +1,3 @@
+---
+- name: Install and configure ECS agent
+  import_tasks: ecs-agent.yml
