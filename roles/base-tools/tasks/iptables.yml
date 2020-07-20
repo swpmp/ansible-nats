@@ -1,0 +1,15 @@
+---
+- name: Install IPTables
+  yum:
+    name: '{{ iptables_packages }}'
+    state: present
+  tags: iptables
+
+- name: Ensure IPTables enabled and running
+  service:
+    name: iptables
+    state: started
+    enabled: true
+  notify: IPTables Flush
+  when: ansible_connection != "docker"
+  tags: iptables

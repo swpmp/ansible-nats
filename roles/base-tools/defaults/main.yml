@@ -1,0 +1,21 @@
+---
+base_tools:
+  - amazon-linux-extras
+  - bind-utils
+  - git
+  - htop
+  - initscripts
+  - links
+  - mtr
+  - net-tools
+  - nfs-utils
+  - tree
+  - unzip
+  - vim
+  - nano
+  - wget
+  - zip
+
+iptables_packages:
+  - iptables
+  - iptables-services

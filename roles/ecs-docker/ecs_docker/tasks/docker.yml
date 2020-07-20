@@ -1,0 +1,29 @@
+---
+- name: Install docker python lib
+  pip:
+    name: docker
+    state: present
+  tags: docker
+
+- name: Adjust docker startup script
+  replace:
+    path: /etc/sysconfig/docker
+    regexp: "^OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false'"
+    replace: "OPTIONS='--log-driver=journald --signature-verification=false'"
+  tags: docker
+   
+- name: Enable docker
+  service:
+    name: docker
+    enabled: true
+    state: started
+  tags: docker
+
+- name: Adjust docker sysctl
+  sysctl:
+    name: net.ipv4.conf.all.route_localnet
+    value: 1
+    sysctl_file: /etc/sysctl.conf
+    sysctl_set: true
+    state: present
+  tags: docker

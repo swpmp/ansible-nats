@@ -1,0 +1,38 @@
+---
+- name: Configure ECS
+  lineinfile:
+    path: /etc/ecs/ecs.config
+    create: true
+    owner: ec2-user
+    group: ec2-user
+    state: present
+    line: "{{ ecs_config_item }}"
+  with_items:
+    - "{{ ecs_config }}"
+  loop_control:
+    loop_var: ecs_config_item
+  tags: ecs
+    
+- name: Configure ECS directories
+  file:
+    path: "{{ ecs_dir_item }}"
+    state: directory
+  with_items:
+    - "{{ ecs_directories }}"
+  loop_control:
+    loop_var: ecs_dir_item
+  tags: ecs
+
+- name: Ensure ECS agent is running
+  docker_container:
+    name: ecs-agent
+    detach: true
+    restart: true
+    restart_policy: on-failure
+    restart_retries: 10
+    network_mode: host
+    env_file: /etc/ecs/ecs.config
+    volumes:
+      - "{{ ecs_volumes }}"
+    image: "{{ ecs_image }}"
+  tags: ecs

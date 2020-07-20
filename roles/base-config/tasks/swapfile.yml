@@ -1,0 +1,42 @@
+---
+- name: Check swapfile exists
+  stat:
+    path: "{{ swapfile_path }}"
+    get_checksum: false
+    get_md5: false
+    get_mime: false
+  register: swapfile_stat
+  tags: swap
+
+- name: Create swapfile
+  block:
+
+    - name: Write swapfile
+      command: "dd if=/dev/zero of={{ swapfile_path }} bs=1M count={{ swapfile_size }}"
+      tags: swap
+
+    - name: Set swapfile permissions
+      file:
+        path: "{{ swapfile_path }}"
+        mode: 0600
+        owner: ec2-user
+        group: ec2-user
+      tags: swap
+
+    - name: Create swap from swapfile
+      command: "mkswap {{ swapfile_path }}"
+      tags: swap
+
+    - name: Add swapfile to fstab
+      lineinfile:
+        dest: /etc/fstab
+        line: "{{ swapfile_path }}  swap  swap  defaults  0 0"
+        state: present
+      tags: swap
+
+    - name: Enable swapfile swap
+      command: "swapon {{ swapfile_path }}"
+      tags: swap
+
+  when: not swapfile_stat.stat.exists and ansible_connection != "docker"
+  tags: swap

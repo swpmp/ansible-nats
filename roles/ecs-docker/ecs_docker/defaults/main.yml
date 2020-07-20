@@ -1,0 +1,30 @@
+---
+ecs_env_file: /etc/ecs/ecs.config
+ecs_cluster: CLUSTER-NATS
+
+docker_tools:
+  - docker
+  - python2-pip
+
+ecs_config:
+  - "ECS_CLUSTER={{ ecs_cluster }}"
+  - "ECS_DATADIR=/data"
+  - "ECS_ENABLE_TASK_IAM_ROLE=true"
+  - "ECS_ENABLE_TASK_IAM_ROLE_NETWORK_HOST=true"
+  - "ECS_LOGFILE=/log/ecs-agent.log"
+  - "ECS_AVAILABLE_LOGGING_DRIVERS=[\"json-file\",\"awslogs\"]"
+  - "ECS_LOGLEVEL=info"
+  - "ECS_SELINUX_CAPABLE=false"
+  - "ECS_ENABLE_SPOT_INSTANCE_DRAINING=true"
+
+ecs_directories:
+  - /var/log/ecs
+  - /var/lib/ecs/data
+
+ecs_volumes:
+  - "/var/log/ecs:/log:Z"
+  - "/var/lib/ecs/data:/data:Z"
+  - "/var/run:/var/run"
+  - "/etc/ecs:/etc/ecs"
+
+ecs_image: "amazon/amazon-ecs-agent:latest"

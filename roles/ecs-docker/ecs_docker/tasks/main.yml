@@ -1,0 +1,14 @@
+---
+- name: Configure ECS agent
+  include_tasks: {{ ecs_items}}
+  with_items:
+    - tools.yml
+    - docker.yml
+    - iptables.yml
+    - ecs.yml
+  loop_control:
+    loop_var: ecs_items
+  tags:
+    - ecs
+    - docker
+    - iptabless

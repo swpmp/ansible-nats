@@ -1,0 +1,6 @@
+---
+- name: Install tools
+  yum:
+    name: "{{ docker_tools }}"
+    state: present  
+  tags: tools  

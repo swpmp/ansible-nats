@@ -1,6 +1,6 @@
 ---
 - name: ECS agent config
-  gather_facts: no
   hosts: localhost
+  gather_facts: no
   roles:
     - ecs-agent

@@ -35,31 +35,33 @@
 
 - name: Create ecs directory (volume)
   file:
-    path: "{{ item }}"
+    path: "{{ dir_item }}"
     state: directory
     mode: 0755
-    owner: root
-    group: root
+    owner: ec2-user
+    group: ec2-user
     recurse: yes
   with_items:
     - "/etc/ecs"
     - "/var/log/ecs"
     - "/var/lib/ecs/data"
+  loop_control:
+    loop_var: dir_item
 
 - name: Create ecs environment file
   template:
     src=ecs.j2
     dest=/etc/ecs/ecs.config
-    owner=root
-    group=root
+    owner=ec2-user
+    group=ec2-user
     mode=0644
 
 - name: Copy systemd configuration file for container agent
   copy:
     src: docker-container@ecs-agent.service
     dest: /etc/systemd/system/docker-container@ecs-agent.service
-    owner: root
-    group: root
+    owner: ec2-user
+    group: ec2-user
     mode: 0755
     backup: no
   register: systemd_conf_file
@@ -73,4 +75,3 @@
     name: docker-container@ecs-agent.service
     state: started
     enabled: True
-

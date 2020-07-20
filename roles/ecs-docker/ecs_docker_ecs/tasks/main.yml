@@ -1,0 +1,7 @@
+---
+- name: Include sub-tasks
+  include_tasks: "{{ item }}.yml"
+  with_items:
+    - ecs
+  tags:
+    - ecs
