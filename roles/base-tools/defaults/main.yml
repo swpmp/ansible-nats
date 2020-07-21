@@ -1,6 +1,5 @@
 ---
 base_tools:
-  - amazon-linux-extras
   - bind-utils
   - git
   - htop
@@ -12,6 +11,5 @@ base_tools:
   - tree
   - unzip
   - vim
-  - nano
   - wget
   - zip
