@@ -1,6 +1,6 @@
 ---
 - name: Install and configure Base tools for Amazon 2 Linux
-  include_tasks: {{ base_items }}
+  include_tasks: "{{ base_items }}"
   with_items:
     - tools.yml
   loop_control:

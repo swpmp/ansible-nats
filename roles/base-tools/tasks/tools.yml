@@ -1,6 +1,6 @@
 ---
 - name: Install base tools
   yum:
-    name: '{{ base_tools }}'
+    name: "{{ base_tools }}"
     state: present
   tags: tools

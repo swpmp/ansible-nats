@@ -1,6 +1,7 @@
 ---
 - name: Install Amazon 2 Linux required base tools
   hosts: localhost
+  become: yes
   gather_facts: no
   roles:
     - base-config
