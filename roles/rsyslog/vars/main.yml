@@ -1,0 +1,6 @@
+---
+# vars file for ansible-role-rsyslog-client
+syslog_conf_path: "/etc/rsyslog.d"
+central_conf_file: "central_syslog.conf"
+sudouser: ec2-user
+sudogroup: ec2-user
