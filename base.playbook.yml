@@ -7,3 +7,4 @@
     - rsyslog
     - base-config
     - base-tools
+    - ecs-docker-ecs
