@@ -13,7 +13,7 @@ if $programname startswith '{{ program }}' then {{ central_log_host }};RSYSLOG_F
 
 $umask 0000
 $FileCreateMode 0644
-$FileGroup admin
+$FileGroup ec2-user
 {% endif %}
 
 {% if central_log_listener %}
