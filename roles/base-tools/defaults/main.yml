@@ -15,7 +15,3 @@ base_tools:
   - nano
   - wget
   - zip
-
-iptables_packages:
-  - iptables
-  - iptables-services

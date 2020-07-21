@@ -3,6 +3,5 @@
   include_tasks: {{ base_items}}
   with_items:
     - tools.yml
-    - iptables.yml
   loop_control:
     loop_var: base_items
